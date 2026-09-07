@@ -1,0 +1,77 @@
+{
+  "thresholds": {
+    "CRITICAL_THREAT": 80,
+    "HIGH_THREAT": 50,
+    "MEDIUM_THREAT": 25
+  },
+  "test_path_multiplier": 0.25,
+  "test_path_markers": [
+    "test",
+    "tests",
+    "__tests__",
+    "spec",
+    "e2e",
+    "fixtures",
+    "mocks",
+    "__mocks__"
+  ],
+  "secret_weights": {
+    "AWS_Credentials": 70,
+    "API_Keys": 40,
+    "Generic_Secrets": 30
+  },
+  "heuristics": [
+    {
+      "id": "gateway",
+      "label": "Payment gateway markers",
+      "category": "Merchant_ID",
+      "risk": "HARDCODED_API_KEYS",
+      "tech": "Payment / merchant identifiers",
+      "weight": 35,
+      "pattern": "MID_|merchant_key|checksum|example_mid|staging_mid|payment_params"
+    },
+    {
+      "id": "phishing",
+      "label": "Login / OTP UI clone",
+      "category": "Phishing_UI",
+      "risk": "PHISHING_UI_CLONE",
+      "tech": "Login mimicry",
+      "weight": 45,
+      "pattern": "login-container|verify-otp|otp-input|sign-in-button"
+    },
+    {
+      "id": "cloud",
+      "label": "Cloud / datastore endpoints",
+      "category": "Cloud_Storage",
+      "risk": "CLOUD_INFRASTRUCTURE_EXPOSURE",
+      "tech": "Cloud endpoint in source",
+      "weight": 30,
+      "pattern": "s3\\.amazonaws|firebaseio\\.com|mongodb\\+srv|database_url"
+    },
+    {
+      "id": "bot",
+      "label": "Browser automation",
+      "category": "Automation",
+      "risk": "PAYMENT_AUTOMATION_BOT",
+      "tech": "Headless / browser automation",
+      "weight": 25,
+      "pattern": "puppeteer|selenium|chromedriver|headless|request-payload"
+    }
+  ],
+  "combos": [
+    {
+      "id": "payment_bot",
+      "requires": ["gateway", "bot"],
+      "weight": 50,
+      "risk": "PAYMENT_AUTOMATION_BOT",
+      "tech": "Live gateway + automation"
+    },
+    {
+      "id": "cloud_secrets",
+      "requires": ["cloud", "secrets"],
+      "weight": 45,
+      "risk": "CLOUD_INFRASTRUCTURE_EXPOSURE",
+      "tech": "Cloud endpoint + leaked secret"
+    }
+  ]
+}
