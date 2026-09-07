@@ -1,0 +1,18 @@
+# Scan inputs and outputs (may contain sensitive findings)
+urls.txt
+intelligence_audit.csv
+*_gitleaks.json
+intel_*/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
