@@ -1,6 +1,6 @@
 import unittest
 
-from git_finder import (
+from leak_triage import (
     classify_rule_id,
     is_test_path,
     redact_secret,

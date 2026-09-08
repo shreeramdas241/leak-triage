@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Git_Finder — repository threat intelligence audit for AppSec reviews."""
+"""Leak Triage — repository threat intelligence audit for AppSec reviews."""
 
 from __future__ import annotations
 
@@ -156,7 +156,7 @@ def verdict_from_score(score: float, thresholds: dict, scanner_missing: bool) ->
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Clone listed Git repositories and classify leaked-secret / threat heuristics.",
+        description="Leak Triage: clone listed Git repositories and classify leaked-secret / threat heuristics.",
     )
     parser.add_argument("-i", "--input", default=DEFAULT_INPUT, help="Newline-separated repository URLs")
     parser.add_argument("-o", "--output", default=DEFAULT_OUTPUT, help="CSV report path")
@@ -514,7 +514,7 @@ def write_html_report(results: list[dict], path: Path) -> None:
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Git_Finder intelligence audit</title>
+  <title>Leak Triage intelligence audit</title>
   <style>
     :root {{ color-scheme: dark; }}
     body {{ font-family: ui-sans-serif, system-ui, sans-serif; margin: 0; background: #0f1419; color: #e7ecf3; }}
@@ -544,7 +544,7 @@ def write_html_report(results: list[dict], path: Path) -> None:
 </head>
 <body>
   <header>
-    <h1>Git_Finder</h1>
+    <h1>Leak Triage</h1>
     <div class="sub">Weighted triage · redacted evidence · {len(results)} repositories</div>
   </header>
   <div class="cards">
@@ -588,7 +588,7 @@ def main() -> None:
 
     rules = load_rules(Path(args.rules))
     mode = "full history" if args.history else f"depth {args.depth}"
-    print(f"[*] Git_Finder v0.2 — {len(urls)} repos · {args.workers} workers · clone {mode}")
+    print(f"[*] Leak Triage v0.2 — {len(urls)} repos · {args.workers} workers · clone {mode}")
 
     results: list[dict] = []
     with open(args.output, mode="w", newline="", encoding="utf-8") as csv_file:
@@ -615,7 +615,7 @@ def main() -> None:
         print(f"[*] HTML summary: {html_path}")
 
     print("------------------------------------------------")
-    print(f"[*] Git_Finder complete. CSV: {args.output}")
+    print(f"[*] Leak Triage complete. CSV: {args.output}")
 
     fail_on = (args.fail_on or "").strip().upper()
     if fail_on and any(row["Verdict"] == fail_on for row in results):
