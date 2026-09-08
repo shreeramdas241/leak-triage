@@ -1,6 +1,8 @@
 # Scan inputs and outputs (may contain sensitive findings)
 urls.txt
 intelligence_audit.csv
+intelligence_audit.html
+*_audit.html
 *_gitleaks.json
 intel_*/
 
@@ -10,6 +12,10 @@ __pycache__/
 .venv/
 venv/
 .env
+tests/fixtures/sample_src/.git/
+tests/fixtures/out.csv
+tests/fixtures/out.html
+tests/fixtures/urls_local.txt
 
 # OS / editor
 .DS_Store
